@@ -1,0 +1,32 @@
+server:
+  port: 80
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.157.129:3306/crm_eim?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+dubbo:
+  application:
+    name: crm-eim
+  registry:
+    address: 192.168.157.129:2181
+    protocol: zookeeper
+  protocol:
+    name: dubbo
+    port: 20880
+  consumer:
+    check: false
+  scan:
+    base-packages: com.ywc.eim.service.impl
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    com:
+      ywc:
+        eim:
+          mapper: debug

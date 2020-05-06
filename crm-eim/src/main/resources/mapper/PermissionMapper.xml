@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywc.eim.mapper.PermissionMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        perm_id, perm_name, url, permission, create_time, update_time, is_del
+    </sql>
+    <resultMap id="RolePermissionVoResultMap" type="com.ywc.crm.eim.vo.RolePermissionVo">
+        <result column="perm_id" property="permId"/>
+        <result column="perm_name" property="permName"/>
+        <result column="url" property="url"/>
+        <result column="permission" property="permission"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_del" property="isDel"/>
+        <collection property="roleName" ofType="java.lang.String">
+            <result column="role_name" property="roleName"/>
+        </collection>
+    </resultMap>
+    <select id="lists" resultMap="RolePermissionVoResultMap">
+            SELECT
+        p.perm_id,
+        p.perm_name,
+        p.url,
+        p.permission,
+        p.create_time,
+        p.update_time,
+        p.is_del,
+        r.role_name
+    FROM
+        eim_permission p,
+        eim_role r,
+        eim_role_permission rp
+    WHERE
+        rp.perm_id=p.perm_id
+    AND
+        rp.role_id=r.role_id
+    </select>
+    <select id="queryById" resultMap="RolePermissionVoResultMap">
+            SELECT
+        p.perm_id,
+        p.perm_name,
+        p.url,
+        p.permission,
+        p.create_time,
+        p.update_time,
+        p.is_del,
+        r.role_name
+    FROM
+        eim_permission p,
+        eim_role r,
+        eim_role_permission rp
+    WHERE
+        rp.perm_id=p.perm_id
+    AND
+        rp.role_id=r.role_id
+    and p.perm_id=#{permId}
+    </select>
+</mapper>

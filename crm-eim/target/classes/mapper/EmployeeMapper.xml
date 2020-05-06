@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ywc.eim.mapper.EmployeeMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        emp_id, emp_name, pwd, salt, age, sex, phone, address, create_time, update_time, is_del
+    </sql>
+    <resultMap id="EmpRoleResultMap" type="com.ywc.crm.eim.vo.EmpRoleVo">
+        <result column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+        <result column="age" property="age"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_del" property="isDel"/>
+        <result column="role_name" property="roleName"/>
+        <result column="dept_name" property="deptName"/>
+    </resultMap>
+    <select id="lists" resultMap="EmpRoleResultMap">
+                SELECT
+                eim_employee.emp_id,
+                eim_employee.emp_name,
+                eim_employee.age,
+                eim_employee.sex,
+                eim_employee.phone,
+                eim_employee.address,
+                eim_employee.create_time,
+                eim_employee.update_time,
+                eim_employee.is_del,
+                eim_role.role_name,
+                eim_department.dept_name
+            FROM
+                eim_employee,
+                eim_emp_role,
+                eim_role,
+                eim_department,
+				eim_dept_emp
+            WHERE
+                eim_employee.emp_id = eim_emp_role.emp_id
+            AND eim_emp_role.role_id = eim_role.role_id
+            AND eim_employee.emp_id=eim_dept_emp.emp_id
+			AND eim_dept_emp.dept_id=eim_department.dept_id
+    </select>
+    <select id="queryById" resultMap="EmpRoleResultMap">
+                SELECT
+                eim_employee.emp_id,
+                eim_employee.emp_name,
+                eim_employee.age,
+                eim_employee.sex,
+                eim_employee.phone,
+                eim_employee.address,
+                eim_employee.create_time,
+                eim_employee.update_time,
+                eim_employee.is_del,
+                eim_role.role_name,
+                eim_department.dept_name
+            FROM
+                eim_employee,
+                eim_emp_role,
+                eim_role,
+                eim_department,
+				eim_dept_emp
+            WHERE
+                eim_employee.emp_id = eim_emp_role.emp_id
+            AND eim_emp_role.role_id = eim_role.role_id
+            AND eim_employee.emp_id=eim_dept_emp.emp_id
+			AND eim_dept_emp.dept_id=eim_department.dept_id
+			AND eim_employee.emp_id = #{empId}
+    </select>
+</mapper>   

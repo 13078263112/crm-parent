@@ -1,0 +1,13 @@
+server:
+  port: 80
+dubbo:
+  application:
+    name: crm-web
+  registry:
+    address: 192.168.157.129:2181
+    protocol: zookeeper
+  consumer:
+    check: false
+spring:
+  thymeleaf:
+    cache: false
